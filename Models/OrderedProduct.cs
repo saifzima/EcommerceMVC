@@ -17,5 +17,8 @@ namespace EcommerceMVC.Models
         public int Quantity{get;set;}
         [Required]
         public string Quality{get;set;}
+        [Required]
+        public string OderedProductsId{get;set;} 
+
     }
 }

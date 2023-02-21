@@ -1,0 +1,62 @@
+﻿@model EcommerceMVC.Models.DTO.Product.ProductsReponseModel
+
+<table class="table">
+    <thead>
+         <th>
+                RefNo
+            </th>
+            <th>
+                Product Name
+            </th>
+
+            <th>
+                Price
+            </th>
+
+            <th>
+               Quality
+            </th>
+
+            <th>
+               Quatity
+            </th>
+             <th>
+               Actions
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                 <td scope="row">
+                    @item.RefNo
+                </td>
+
+                <td scope="row">
+                    @item.ProductName
+                </td>
+                <td scope="row">
+                    @item.Price
+                </td>
+                <td scope="row">
+                   @item.Quality
+                </td>
+                <td scope="row">
+                    @item.Quantity
+                </td>
+                <td scope="row">
+                   <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-primary">View</a>
+                   <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                   <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+<form asp-action="Create">
+    <button type="submit" class="btn btn-success">Add new product</button>
+</form>

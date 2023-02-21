@@ -8,6 +8,7 @@ namespace EcommerceMVC.Models
 {
     public class Product
     {
+        public int Id{get; set;}
         [Required]
         public string ProductName {get;set;}
         [Required]
@@ -16,6 +17,10 @@ namespace EcommerceMVC.Models
         public int Quantity{get;set;}
         [Required]
         public string Quality{get;set;}
-       // public string ProductId{}
+        public string Image{get;set;}
+        [Required]
+        public Guid RefNo {get;set;} = Guid.NewGuid();
+        public bool IsAvailable { get; set; }
+        public bool IsDelete { get;set;}
     }
 }

@@ -20,7 +20,8 @@ namespace EcommerceMVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            // return View();
+            return RedirectToAction("Login", "User");
         }
 
         public IActionResult Privacy()

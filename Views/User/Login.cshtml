@@ -1,0 +1,39 @@
+﻿@model EcommerceMVC.Models.DTO.User.UserLoginReqestModel
+<style>
+    .login-div{
+        padding : 2pc;
+    }
+    .inp-div{
+        margin: 2pc;
+    }
+    .label{
+        margin-right: 20px;
+    }
+    .email-label{
+        margin-right: 50px;
+    }
+    .input{
+        width: 20pc;
+        border-radius: 5px;
+    }
+</style>
+<p class="hidden"></p>
+<div class="border login-div">
+    <form asp-action="UserLogin">
+    @if(TempData["Failed"] != null)
+    {
+        <p>@TempData["Failed"]</p>
+    }
+    <div class="inp-div">
+        <label asp-for="Email" class="label email-label">Email</label>
+        <input type="text" name="Email" class="input"/>
+    </div>
+    <div class="inp-div">
+        <label asp-for="Password" class="label">Password</label>
+        <input type="password" name="Password" class="input"/>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-success" value="Login" />
+    </div>
+    </form>
+</div>

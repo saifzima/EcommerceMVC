@@ -1,0 +1,62 @@
+﻿@model EcommerceMVC.Models.DTO.OrderedProduct.CreateOrderedProductRequestModel
+
+<main class="main">
+
+    <div class="form-container">
+        </div>
+
+        <div id="Data-form">
+            @using (Html.BeginForm("Create", "OrderedProduct"))
+            {
+
+                <h1>Add new OrderedProduct</h1>
+
+                <hr />
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.ProductName, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.ProductName, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.ProductName,"", new {@class="text-danger"})
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Price, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.Price, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Price,"", new {@class="text-danger"})
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Quantity, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.Quantity, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Quantity,"", new {@class="text-danger"})
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Quality, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.Quality, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Quality  ,"", new {@class="text-danger"})
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            }
+
+        </div>
+       <div>   
+        <form>
+            <input type="text" placeholder="Search...">
+            <button type="submit"><i class="fa fa-search"></i> Search </button>
+        </form>
+    </div>
+
+
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+
+</main>
+@* ends here *@

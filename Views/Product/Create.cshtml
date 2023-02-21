@@ -1,0 +1,58 @@
+@model EcommerceMVC.Models.DTO.Product.CreateProductRequestModel
+<style>
+    .form-container{
+        width: 20pc;
+    }
+</style>
+<main class="main">
+    
+    <form class="form-container" asp-action="CreateProduct" enctype="multipart/form-data">
+
+        <div id="Data-form">
+            @using (Html.BeginForm("Create", "Product"))
+            {
+
+                <h1>Add new Product</h1>
+
+                <hr />
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.ProductName, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.ProductName, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.ProductName,"", new {@class="text-danger"})
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Price, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.Price, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Price,"", new {@class="text-danger"})
+                </div>
+                <div class="form-group">
+                    <label asp-for="Image">Image</label>
+                    <input asp-for="Image" type="file" name ="Image" required/>
+                </div>   
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Quantity, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.Quantity, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Quantity,"", new {@class="text-danger"})
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Quality, new {@class = "control-label"})
+                    @Html.TextBoxFor(x => x.Quality, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(x => x.Quality  ,"", new {@class="text-danger"})
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            }
+
+        </div>
+
+    </form>
+</main>
+@* ends here *@
+
+
+

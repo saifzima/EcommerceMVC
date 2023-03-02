@@ -36,7 +36,7 @@ namespace EcommerceMVC.Implementation.Service
                     cart = new Cart
                     {
                         CustomerId = customer.Id,
-                        TotalPrice = 0,
+                        TotalPrice = createTransationRequestModel.Price,
                     };
                    cart = _cartRepository.Create(cart);
                 }
@@ -50,15 +50,17 @@ namespace EcommerceMVC.Implementation.Service
                 CartId = cart.Id
             };
 
-            _transactionRepository.Create(transaction);
+           _transactionRepository.Create(transaction);
+           cart.TotalPrice += transaction.TotalAmount;
+           _cartRepository.Update(cart);
             product.Quantity -= createTransationRequestModel.Quantity;
             _productRepository.Update(product);
            
-                return new BaseResponse
-             {
+            return new BaseResponse
+            {
                 Message = "successfully added to cart",
                 Status = true
-             };
+            };
         }
 
        
@@ -155,6 +157,7 @@ namespace EcommerceMVC.Implementation.Service
                 Status = true,
             };          
         }
+        
         public CartsResponseModel GetCartByCustomer(int userId)
         {
             var customer =_customer.Get(x => x.UserId == userId);
@@ -177,13 +180,78 @@ namespace EcommerceMVC.Implementation.Service
                     DatePaid = x.DatePaid,
                     TotalPrice = x.TotalPrice,
                     RefNo = x.RefNo,
-                    NumberOfTransaction = x.transaction.Count,
+                    NumberOfTransaction = _transactionRepository.GetAllTransaction(t => t.CartId == x.Id).Count,
                     IsPaid = x.IsPaid,
                 }).ToList(),
-
             };
         }
-         
+        public TransationsResponseModel GetAllTransactionInCart(int cartId)
+        {
+            var get = _transactionRepository.GetAllTransaction(x => x.CartId == cartId);
+            if(get.Count == 0)
+            {
+                 return  new TransationsResponseModel
+                {
+                    Message = "failed to get",
+                    Status = false
+                };
+            }
+             return new TransationsResponseModel
+            {
+                Message = "Successfully fetch",
+                Status = true,
+                Data = get.Select(x => new TransationDTO
+                {
+                    ReferenceNo = x.ReferenceNo,
+                    ProductName = x.ProductName,
+                    Quantity = x.Quantity,
+                    TotalAmount = x.TotalAmount,
+                    Id = x.Id
+                }).ToList(),
+            };
+
+        }
+
+        public BaseResponse MakePayment(int id)
+        {
+             var cart = _cartRepository.Get(x => x.Id == id && !x.IsPaid);
+            if(cart == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "Cart not found",
+                    Status = false,
+                };
+            }
+            cart.IsPaid = true;
+            _cartRepository.Update(cart);
+            return new BaseResponse
+            {
+                Message = "Payment successfull",
+                Status = true,
+            };
+        }
+
+        public BaseResponse UpdateTransaction(TransactionUpdateRequestModel transaction)
+        {
+            var get = _transactionRepository.GetById(transaction.Id);
+
+            if (get == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "failed to Update",
+                    Status = false,
+                };
+            }
+            get.Quantity= transaction.Quantity;
+            _transactionRepository.Update(get);
+            return new BaseResponse
+            {
+                Message = "successfully Updated",
+                Status = true,
+            };               
+       }
     }
 }        
        

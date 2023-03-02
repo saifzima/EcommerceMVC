@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using EcommerceMVC.Models;
 
 namespace EcommerceMVC.Interface.IRepository
@@ -9,8 +10,9 @@ namespace EcommerceMVC.Interface.IRepository
         Transaction Create(Transaction transaction);
         IEnumerable<Transaction> GetAll();
         IEnumerable<Transaction> GetByDate(DateTime dateTime);
+        IList<Transaction>GetAllTransaction(Expression<Func<Transaction, bool>> expression);
         Transaction GetById(int id);
-         IEnumerable<Transaction> GetByCustomerId(int customerId);
-
+        IEnumerable<Transaction> GetByCustomerId(int customerId);
+        Transaction Update(Transaction transaction);
     }
 }

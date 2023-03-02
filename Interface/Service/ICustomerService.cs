@@ -16,5 +16,6 @@ namespace EcommerceMVC.Interface.Service
         BaseResponse Delete(int CustomerId);
         CustomerResponseModel GetById(int CustomerId);
         CustomersResponseModel GetAll();
+        FundWalletRequestModel GetBalance(FundWalletRequestModel model, int id); 
     }
 }

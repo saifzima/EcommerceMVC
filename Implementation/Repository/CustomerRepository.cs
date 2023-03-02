@@ -44,6 +44,17 @@ namespace EcommerceMVC.Implementation.Repository
             return getAllCustomer;
         }
 
+        public double GetBalance()
+        {
+             var balance = _context.Wallets.Sum(x => (x.Credit - x.Debit));
+            return balance;     
+        }
+        public Customers GetCustomerById(int id)
+        {
+            var get = _context.Customers.Include(a=>a.User).SingleOrDefault(e=>e.Id==id);
+            return get;
+        }
+
         public Customers Update(Customers customer)
         {
             _context.Customers.Update(customer);

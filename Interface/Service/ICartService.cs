@@ -8,6 +8,7 @@ namespace EcommerceMVC.Interface.Service
     public interface ICartService
     {
         BaseResponse Create(CreateTransationRequestModel createTransationRequestModel);
+        BaseResponse MakePayment(int id);
         BaseResponse Update(CartUpdateRequestModel cart, int Id);
         BaseResponse Delete(int Id);
         CartResponseModel GetById(int Id);
@@ -15,5 +16,7 @@ namespace EcommerceMVC.Interface.Service
         CartsResponseModel GetCartByCustomer(int customerId);
         CartResponseModel NotPaidExist(int Id);
         double GetCartTotal(int Id);
-    }
+       TransationsResponseModel GetAllTransactionInCart(int cartId)  ; 
+       BaseResponse UpdateTransaction(TransactionUpdateRequestModel transaction);
+  }
 }

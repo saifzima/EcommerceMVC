@@ -1,4 +1,5 @@
-﻿using EcommerceMVC.Interface.Service;
+﻿using System.Security.Claims;
+using EcommerceMVC.Interface.Service;
 using EcommerceMVC.Models;
 using EcommerceMVC.Models.DTO.Admin;
 using EcommerceMVC.Models.DTO.Customer;
@@ -8,7 +9,7 @@ namespace EcommerceMVC.Controllers
 {
     public class CustomerController : Controller
     {
-
+        // private readonly IWalletService _walletService;
         private readonly ICustomerService _customerService;
         public CustomerController(ICustomerService customerService)
         {
@@ -65,18 +66,22 @@ namespace EcommerceMVC.Controllers
             return View(get);
         }
 
-        // public IActionResult GetAllTransactionByCustomerId(int customerId)
-        // {
-        //     var get = _customerService.GetAllTransactionByCustomerId(customerId);
-        //     return View(get);
-        // }
-        
         public IActionResult GetAll()
         {
             var list = _customerService.GetAll();
             return View(list);
         }
-
-
+         public IActionResult Fund(int id)
+        {
+           var get = _customerService.GetById(id);
+            return View(get);    
+        }
+         public IActionResult FundWallet(FundWalletRequestModel model)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var get= _customerService.GetBalance(model,int.Parse(user));
+            return View(get);
+        }
+        
     }
 }

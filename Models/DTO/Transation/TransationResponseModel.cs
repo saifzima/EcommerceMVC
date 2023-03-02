@@ -9,4 +9,9 @@ namespace EcommerceMVC.Models.DTO.Transation
     {
          public TransationDTO Data { get; set; }
     }
+    public class TransationsResponseModel : BaseResponse
+    {
+         public List<TransationDTO> Data { get; set; } = new List<TransationDTO> ();
+
+    }
 }

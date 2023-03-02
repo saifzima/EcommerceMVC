@@ -9,6 +9,7 @@
 @{
    var userrr = @User.FindFirst(ClaimTypes.NameIdentifier).Value;
 } *@
+<h1>Display of Product</h1>
         
   <div class="container py-5">
     <div class="row">
@@ -35,7 +36,14 @@
                         </div>
 
                         <div class="d-flex justify-content-between mb-2">
-                            <p class="text-muted mb-0">Available: <span class="fw-bold">@item.Quantity</span></p>
+                            @if(@item.Quantity==0)
+                            {
+                            
+                            }
+                            else{
+                                 <p class="text-muted mb-0">Available: <span class="fw-bold">@item.Quantity</span></p>
+                            }
+                           
                             <div class="ms-auto text-warning">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>

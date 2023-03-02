@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using EcommerceMVC.Context;
 using EcommerceMVC.Interface.IRepository;
 using EcommerceMVC.Models;
@@ -26,6 +27,12 @@ namespace EcommerceMVC.Implementation.Repository
             return transactions;
         }
 
+        public IList<Transaction> GetAllTransaction(Expression<Func<Transaction, bool>> expression)
+        {
+            var transactions = _context.Transactions.Where(expression);
+            return transactions.ToList();
+        }
+
         public IEnumerable<Transaction> GetByCustomerId(int customerId)
         {
             
@@ -45,6 +52,12 @@ namespace EcommerceMVC.Implementation.Repository
             return transaction;
         }
 
-
+        public Transaction Update(Transaction transaction)
+        {
+            
+            _context.Transactions.Update(transaction);
+            _context.SaveChanges();
+            return transaction;
+        }
     }
 }

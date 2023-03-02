@@ -76,6 +76,14 @@ namespace EcommerceMVC.Controllers
             TempData["Message"] = buyProducts.Message;
             return RedirectToAction("DisplayProducts");
         }
+        public IActionResult ViewCartByCustomer(ViewRecipt viewRecipt)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var viewRecipts = _productService.ViewCartByCustomer(viewRecipt,int.Parse(user));
+            TempData["Message"] = viewRecipts.Message;
+           // return RedirectToAction("DisplayProducts");
+            return View(user);
+        }
       
     }
 }

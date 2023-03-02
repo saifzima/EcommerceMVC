@@ -11,6 +11,7 @@ namespace EcommerceMVC.Models.DTO.Customer
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public double Balance{get;set;}
     
         [Required]
         public string Email { get; set; }

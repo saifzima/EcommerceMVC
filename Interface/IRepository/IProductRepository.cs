@@ -11,7 +11,6 @@ namespace EcommerceMVC.Interface.IRepository
         Product Create(Product product);
         bool Delete(Product product);
         Product GetById(int productId);
-        
         IEnumerable<Product> GetAllProduct();
         Product Update(Product product);
     }

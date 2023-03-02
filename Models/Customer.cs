@@ -15,7 +15,5 @@ namespace EcommerceMVC.Models
         public Wallet Wallets { get; set; }
         public string Address{get; set;}
         public List<Cart> cart = new List<Cart>();
-        // public int CartId{get;set;}
-        // public Cart Cart{get;set;}
     }
 }

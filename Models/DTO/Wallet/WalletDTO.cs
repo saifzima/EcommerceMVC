@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EcommerceMVC.Models
+namespace EcommerceMVC.Models.DTO.Wallet
 {
-    public class Wallet : BaseEntity
+    public class WalletDTO
     {
-        public int Id { get; set; }
-        public Customers Customer { get; set; }
-        public int CustomerId { get; set; }
         public double Debit { get; set; }
         public double Credit { get; set; }
         public double Balance { get; set; }
-        
+        public int CustomerId { get; set; } 
     }
 }

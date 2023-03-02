@@ -2,6 +2,6 @@
 {
     public class CartResponseModel :BaseResponse
     {
-          public CartDTO Data { get; set; }
+       public CartDTO Data { get; set; }
     }
 }

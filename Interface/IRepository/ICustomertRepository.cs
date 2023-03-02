@@ -16,7 +16,8 @@ namespace EcommerceMVC.Interface.IRepository
         bool Delete(Customers customer);
         IList<Customers> GetAllCustomer(Expression<Func<Customers, bool>> expression);
         Customers Get(Expression<Func<Customers, bool>> expression);
+        Customers GetCustomerById(int id);
         Customers Update(Customers customer);
-        Customers UpdatePassword(Customers customer);
+        double GetBalance();
     }
 }

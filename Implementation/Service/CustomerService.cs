@@ -6,24 +6,29 @@ using EcommerceMVC.Models.DTO;
 using EcommerceMVC.Models.DTO.Admin;
 using EcommerceMVC.Models.DTO.Customer;
 using EcommerceMVC.Models.DTO.Transation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-
 namespace EcommerceMVC.Implementation.Service
 {
     public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IWalletRepository _walletRepository;
         private readonly IUserRepository _usersRepository;
         private readonly ITransactionRepository _transaction;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomerService(ICustomerRepository customer, IUserRepository user, ITransactionRepository transaction)
+
+        public CustomerService(ICustomerRepository customer, IUserRepository user, ITransactionRepository transaction, IWalletRepository walletRepository,IHttpContextAccessor httpContextAccessor)
         {
             _customerRepository = customer;
             _usersRepository = user;
             _transaction = transaction;
+            _httpContextAccessor = httpContextAccessor;
+            _walletRepository = walletRepository;
         }
 
         public CustomerResponseModel Create(CreateCustomerRequestModel createCustomerRequestModel)
@@ -135,7 +140,7 @@ namespace EcommerceMVC.Implementation.Service
         public BaseResponse Update(CustomerUpdateRequestModel customer, int CustomerId)
         {
             var get = _customerRepository.Get(x => x.Id == CustomerId);
-
+// walet balance >= totalamount 
             if (get == null)
             {
                 return new BaseResponse
@@ -156,7 +161,44 @@ namespace EcommerceMVC.Implementation.Service
                 Status = true,
             };
         }
+        public FundWalletRequestModel GetBalance(FundWalletRequestModel model, int userId)
+        {
+            var wallet = _walletRepository.GetBalance();
+             var customer = _customerRepository.Get(a => a.UserId == userId);
 
+            if(customer == null)
+            {   
+                return new FundWalletRequestModel
+                {
+                    Message = "failed to fund",
+                    Status = false,
+                };
+            }
+            // if(customer.Wallets.Balance < model.Balance)
+            // {
+            //     return new FundWalletRequestModel
+            //     {
+            //         Message = "There is not enough balance",
+            //         Status = false,
+            //     };
+            // }
+            // else
+            // {
+            //     return new FundWalletRequestModel
+            //     {
+            //         Message ="Balanced",
+            //         Status = true
+            //     };
+            // }
+             customer.Wallets.Balance += model.Balance;
+             _customerRepository.Update(customer);
+             return new FundWalletRequestModel
+            {
+                Message = "successfully fund",
+                Status = true,
+            };
+            
+        }
     }
 }
 

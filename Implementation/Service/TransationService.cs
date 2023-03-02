@@ -11,13 +11,13 @@ using EcommerceMVC.Models.DTO.Transation;
 
 namespace EcommerceMVC.Implementation.Service
 {
-    public class TransationService : ITrancsationService
+    public class TransactionService : ITransactionService
     {
         private readonly ICartRepository _cart;
          private readonly ITransactionRepository _transaction;
         private readonly IProductRepository _product;
         private readonly ICustomerRepository _customer;
-         public TransationService(ITransactionRepository transaction, IProductRepository product, ICustomerRepository customer,  ICartRepository cart)
+         public TransactionService(ITransactionRepository transaction, IProductRepository product, ICustomerRepository customer,  ICartRepository cart)
         {
             _transaction = transaction;
             _product = product;
@@ -51,11 +51,13 @@ namespace EcommerceMVC.Implementation.Service
                 Status = true,
                 Data = new TransationDTO
                 {
-                    Created = getById.Created,
-                    CustomerId = getById.Cart.CustomerId,
+                    Id = getById.Id,
                     TotalAmount = getById.TotalAmount,
                     ProductName = getById.ProductName,
-                    Quantity = getById.Quantity
+                    Quantity = getById.Quantity,
+                    ReferenceNo = getById.ReferenceNo,
+
+                    
                 },    
             };
         }    

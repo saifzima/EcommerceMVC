@@ -40,6 +40,10 @@ namespace EcommerceMVC.Implementation.Repository
         public IEnumerable<Product> GetAllProduct()
         {
             var products = _context.Products.ToList();
+            // if (products == null)
+            // {
+            //     return null;
+            // } 
             return products;
         }
 

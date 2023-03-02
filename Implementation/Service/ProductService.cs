@@ -17,17 +17,20 @@ namespace EcommerceMVC.Implementation .services
     public class ProductService : IProductService
     {
         private readonly  ITransactionRepository  _transaction;
+        private readonly ICartRepository _cart;
         private readonly IProductRepository _productRepository;
         private readonly ICustomerRepository _customerRepository;
          private readonly IWebHostEnvironment _webpost;
          private readonly IHttpContextAccessor _httpContextAccessor;
-        public ProductService(IProductRepository productRepository, IWebHostEnvironment webpost, ITransactionRepository transaction,IHttpContextAccessor httpContextAccessor, ICustomerRepository customerRepository)
+        public ProductService(IProductRepository productRepository, IWebHostEnvironment webpost, ITransactionRepository transaction,IHttpContextAccessor httpContextAccessor, ICustomerRepository customerRepository,  ICartRepository cart)
         {
             _productRepository = productRepository;
             _webpost = webpost;
             _httpContextAccessor = httpContextAccessor;
             _customerRepository = customerRepository;
             _transaction = transaction;
+            _cart = cart;
+
         }
 
         public ProductResponseModel Create(CreateProductRequestModel ProductDto)
@@ -114,6 +117,7 @@ namespace EcommerceMVC.Implementation .services
         public ProductsReponseModel GetAll()
         {
             var getAll = _productRepository.GetAllProduct();
+            
             if (getAll == null)
             {
                 return new ProductsReponseModel
@@ -121,6 +125,7 @@ namespace EcommerceMVC.Implementation .services
                     Message = "failed to fetch",
                     Status = false,
                 };
+                
             }
             return new ProductsReponseModel
             {
@@ -135,8 +140,10 @@ namespace EcommerceMVC.Implementation .services
                     Quantity = x.Quantity,
                     RefNo = x.RefNo,
                     Image = x.Image,
+                    
                 }).ToList()
             };
+            
         }
 
         public ProductResponseModel GetById(int RefNo)
@@ -224,9 +231,41 @@ namespace EcommerceMVC.Implementation .services
                 Status = true
             };
         }
-        // public BaseResponse ViewCartByCustomer()
-        // {
-
-        // }
+        public BaseResponse ViewCartByCustomer(ViewRecipt viewRecipt, int userId )
+        {
+            var get = _productRepository.GetById(viewRecipt.Id);
+            if(get == null)
+            {
+                return new BaseResponse
+                {
+                    Message = "failed to view",
+                    Status = false,
+                };
+            }
+            if(get.Id < viewRecipt.Id)
+            {
+                return new BaseResponse
+                {
+                    Message = "The recipt is not issue",
+                    Status = false 
+                };
+            }
+            var customer = _customerRepository.Get(a => a.UserId == userId);
+            get.Id = viewRecipt.Id;
+            get.Id = viewRecipt.Id ;
+            var cart = new Cart
+            {
+                TotalPrice = viewRecipt.TotalPrice,
+                DatePaid = viewRecipt.DatePaid,
+                // NumberOfTransaction = viewRecipt.tr,
+                RefNo = Guid.NewGuid().ToString(),                
+                IsPaid = viewRecipt.IsPaid,
+            };
+            return new BaseResponse 
+            {
+                Message = "The recipt is  issue",
+                Status = true, 
+            };
+        }
     }
 }

@@ -45,11 +45,12 @@ namespace EcommerceMVC
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderedProductRepository, OrderedProductRepository>();
-            services.AddScoped<IOrderedProductService, OrderedProductService>();  
+            services.AddScoped<IOrderedProductService, OrderedProductService>(); 
+            services.AddScoped<IWalletRepository,WalletRepository> ();
             string connectionString = Configuration.GetConnectionString("ApplicationConnectionstring");
             services.AddDbContext<ApplicationContext>(x => x.UseMySQL(connectionString));
             services.AddScoped<ITransactionRepository, TransactionRepository>();
-            services.AddScoped<ITrancsationService, TransationService>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
            .AddCookie(config =>
@@ -82,7 +83,6 @@ namespace EcommerceMVC
             app.UseAuthentication();
             
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

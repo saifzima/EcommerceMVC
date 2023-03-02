@@ -12,6 +12,7 @@ namespace EcommerceMVC.Interface.Service
         ProductResponseModel Create(CreateProductRequestModel product);
         BaseResponse Update(ProductUpdateRequestModel product);
         BaseResponse Delete(int RefNo);
+        BaseResponse ViewCartByCustomer(ViewRecipt viewRecipt, int userId );
          BaseResponse BuyProduct(BuyRequestModel buyRequest, int userId);
         ProductResponseModel GetById(int RefNo);
        // BuyRequestModel BuyProduct(int ProductId);

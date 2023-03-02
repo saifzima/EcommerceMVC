@@ -1,5 +1,5 @@
 @model EcommerceMVC.Models.DTO.Cart.CartsResponseModel
-
+<h1>customer Cart</h1>
 <table class="table">
     <thead>
          <th>
@@ -23,6 +23,13 @@
              <th>
                Actions
             </th>
+             <th>
+               More Actions
+            </th>
+            <th>
+            More
+            </th>
+
 
         </tr>
     </thead>
@@ -48,9 +55,20 @@
                     @item.NumberOfTransaction
                 </td>
                 <td scope="row">
-                   <a class="btn btn-primary">View</a>
+                   <a asp-action="GetAllTransactionInCart" asp-route-id="@item.Id" class="btn btn-primary">View</a>
                 </td>
                 
+                @if (item.IsPaid)
+                {
+                     <td scope="row">
+                        <a asp-action="Reciept" asp-route-id="@item.Id" class="btn btn-primary">View Receipt</a>
+                    </td>
+                }else
+                {
+                     <td scope="row">
+                        <a asp-action="MakePayment" asp-route-id="@item.Id" class="btn btn-primary">Make Payment</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>
